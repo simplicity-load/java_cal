@@ -44,8 +44,11 @@ public class Cal {
         int counterr = 0;
         while (countMonth < beginMonth || countYear < beginYear)
         {
+            //if ( countMonth == 2 && countYear == 100 )
+            //    System.out.printf("> countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counterr);
             if ((countYear % 4 == 0 && countYear % 100 != 0) ||
-                countYear % 400 == 0)
+                (countYear < 1582 && countYear % 4 == 0) ||
+                countYear % 400 == 0 )
                 daysInMonth[1] = 29;
             else
                 daysInMonth[1] = 28;
@@ -102,6 +105,7 @@ public class Cal {
                         System.out.println("null");
         */
         Cal col = new Cal();
+        /*
         col.getRangeOfMonths(2, 1, 3, 2022);
         col.getRangeOfMonths(3, 1, 3, 2022);
         col.getRangeOfMonths(4, 1, 3, 2022);
@@ -116,6 +120,8 @@ public class Cal {
         col.getRangeOfMonths(1, 2, 3, 2022);
         col.getRangeOfMonths(2, 2, 3, 2022);
         col.getRangeOfMonths(3, 2, 3, 2022);
+        */
+        col.getRangeOfMonths(3, 100, 3, 2022);
 
     }
 }
