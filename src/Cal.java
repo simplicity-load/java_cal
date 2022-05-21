@@ -11,7 +11,22 @@ public class Cal {
     //TODO get a range of months including BEGIN and END limits
     public Year[] getRangeOfMonths(int beginMonth, int beginYear, int endMonth, int endYear)
     {
-        a
+        if (beginMonth < 0 ||
+            beginYear < 0 ||
+            endMonth < 0 ||
+            endYear < 0 ||
+            beginMonth > endYear ||
+            (beginMonth < endMonth && beginYear == endYear)) {
+
+            System.out.println("You inputted wrong actual parameters for the Calendar");
+            System.exit(1);
+        }
+
+        // How the first day of the first year starts out
+        int intialDay = 1;
+        int initialYear = 1;
+        int initialWeekPosition = 5;
+        return new Year[] {new Year(2022)};
     }
 
     public static void main(String[] args)
