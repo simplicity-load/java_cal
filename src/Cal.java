@@ -46,12 +46,19 @@ public class Cal {
         {
             //if ( countMonth == 2 && countYear == 100 )
             //    System.out.printf("> countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counterr);
-            if ((countYear % 4 == 0 && countYear % 100 != 0) ||
+            /*
+            if ((countYear % 4 == 0 && countYear % 100 != 0) &&
                 (countYear < 1582 && countYear % 4 == 0) ||
-                countYear % 400 == 0 )
+                countYear % 400 != 0 )
                 daysInMonth[1] = 29;
             else
                 daysInMonth[1] = 28;
+                */
+            if(isLeap(countYear))
+                daysInMonth[1] = 29;
+            else
+                daysInMonth[1] = 28;
+
 
             if (countDay == daysInMonth[countMonth-1]) {
                 if (countMonth == 12) {
@@ -67,7 +74,8 @@ public class Cal {
             if (countWeekPosition == 7)
                 countWeekPosition = 1;
             else
-                countWeekPosition++;
+                if (!(countYear == 1752 && countMonth == 9 && countDay > 2 && countDay < 14))
+                    countWeekPosition++;
             counterr++;
         }
 
@@ -121,7 +129,20 @@ public class Cal {
         col.getRangeOfMonths(2, 2, 3, 2022);
         col.getRangeOfMonths(3, 2, 3, 2022);
         */
-        col.getRangeOfMonths(3, 100, 3, 2022);
+        col.getRangeOfMonths(2, 100, 9, 2022);
 
+    }
+
+public boolean isLeap(int year){
+        if(year<=1752){
+            if(year%4==0)
+                return true;
+            return false;
+        }
+        else{
+            if((year%4==0 && year%100!=0) || year % 400==0)
+                return true;
+            return false;
+        }
     }
 }
