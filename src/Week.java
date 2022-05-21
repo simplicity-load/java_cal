@@ -9,7 +9,7 @@ public class Week {
             week[position-1] = day;
         }
         catch (IndexOutOfBoundsException e) {
-            System.out.println("Input the index starting from one as in the first day of the week\nError:\n" + e);
+            System.out.println("Input the index starting from one as in the first Day of the Week\nError:\n" + e);
         }
     }
 
