@@ -10,7 +10,12 @@ public class Month {
 
     public void addWeek(Week week)
     {
-        month[weeks] = week;
+        try {
+            month[weeks] = week;
+        }
+        catch (IndexOutOfBoundsException e) {
+            System.out.println("Too many weeks in one Month\nError:\n" + e);
+        }
         weeks++;
     }
 
@@ -28,5 +33,20 @@ public class Month {
     public String getMonthName()
     {
         return monthName;
+    }
+
+
+    public boolean isEmpty()
+    {
+        int counter = 0;
+
+        for (Week w : month)
+            if (w == null)
+                counter++;
+
+        if (counter == 7)
+            return true;
+
+        return false;
     }
 }

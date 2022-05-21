@@ -23,7 +23,8 @@ public class Week {
         int counter = 0;
 
         for (Day d : week)
-            counter++;
+            if (d == null)
+                counter++;
 
         if (counter == 7)
             return true;

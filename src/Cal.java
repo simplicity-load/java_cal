@@ -1,5 +1,18 @@
 public class Cal {
+
     public Cal() { }
+
+    //TODO get only the specified month
+    public Year[] getMonth(int month, int year)
+    {
+        return getRangeOfMonths(month, year, month, year);
+    }
+
+    //TODO get a range of months including BEGIN and END limits
+    public Year[] getRangeOfMonths(int beginMonth, int beginYear, int endMonth, int endYear)
+    {
+        a
+    }
 
     public static void main(String[] args)
     {
