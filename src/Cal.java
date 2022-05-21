@@ -30,7 +30,6 @@ public class Cal {
             System.out.println("You inputted wrong actual parameters for the Calendar");
             System.exit(1);
         }
-        //System.out.printf("beginYear: %d | endYear: %d | beginYear > endYear: %s\n", beginYear, endYear, beginYear > endYear);
         // We add one since were going to want to inclusively calculate years
         int number_of_years = endYear - beginYear + 1;
         Year[] yearArray = new Year[number_of_years];
@@ -41,20 +40,13 @@ public class Cal {
         int countWeekPosition = initial_week_position;
         int countMonth = initial_month;
         int countYear = initial_year;
-        int counterr = 0;
+        int counter = 0;
         while (countMonth < beginMonth || countYear < beginYear)
         {
-            //if ( countMonth == 2 && countYear == 100 )
-            //    System.out.printf("> countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counterr);
-            /*
-            if ((countYear % 4 == 0 && countYear % 100 != 0) &&
-                (countYear < 1582 && countYear % 4 == 0) ||
-                countYear % 400 != 0 )
+
+            if (countYear <= 1752 && countYear % 4 == 0)
                 daysInMonth[1] = 29;
-            else
-                daysInMonth[1] = 28;
-                */
-            if(isLeap(countYear))
+            else if((countYear % 4 == 0 && countYear % 100 != 0) || countYear % 400 == 0)
                 daysInMonth[1] = 29;
             else
                 daysInMonth[1] = 28;
@@ -76,11 +68,18 @@ public class Cal {
             else
                 if (!(countYear == 1752 && countMonth == 9 && countDay > 2 && countDay < 14))
                     countWeekPosition++;
-            counterr++;
+
+            counter++;
         }
 
-        //while ( countYear
-        System.out.printf("countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counterr);
+        if(beginYear > 1752)
+            counter -= 11;
+
+        // Start creating the actual Calendar we want
+        while (countMonth <= endMonth || countYear <= endYear) {
+            Week week = new Week();
+        }
+        System.out.printf("countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counter);
 
         //return yearArray;
     }
@@ -113,36 +112,7 @@ public class Cal {
                         System.out.println("null");
         */
         Cal col = new Cal();
-        /*
-        col.getRangeOfMonths(2, 1, 3, 2022);
-        col.getRangeOfMonths(3, 1, 3, 2022);
-        col.getRangeOfMonths(4, 1, 3, 2022);
-        col.getRangeOfMonths(5, 1, 3, 2022);
-        col.getRangeOfMonths(6, 1, 3, 2022);
-        col.getRangeOfMonths(7, 1, 3, 2022);
-        col.getRangeOfMonths(8, 1, 3, 2022);
-        col.getRangeOfMonths(9, 1, 3, 2022);
-        col.getRangeOfMonths(10, 1, 3, 2022);
-        col.getRangeOfMonths(11, 1, 3, 2022);
-        col.getRangeOfMonths(12, 1, 3, 2022);
-        col.getRangeOfMonths(1, 2, 3, 2022);
-        col.getRangeOfMonths(2, 2, 3, 2022);
-        col.getRangeOfMonths(3, 2, 3, 2022);
-        */
-        col.getRangeOfMonths(2, 100, 9, 2022);
+        col.getRangeOfMonths(3, 2022, 9, 2022);
 
-    }
-
-public boolean isLeap(int year){
-        if(year<=1752){
-            if(year%4==0)
-                return true;
-            return false;
-        }
-        else{
-            if((year%4==0 && year%100!=0) || year % 400==0)
-                return true;
-            return false;
-        }
     }
 }
