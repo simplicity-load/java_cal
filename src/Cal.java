@@ -47,7 +47,7 @@ public class Cal {
 
             Year year = new Year(countYear);
             while (countMonth <= 12) {
-                Month month = new Month();
+                Month month = new Month(countMonth);
                 Week week = new Week();
                 while (countDay <= daysInMonth[countMonth-1]) {
 
@@ -68,7 +68,7 @@ public class Cal {
                 }
                 if (countYear >= beginYear && countMonth >= beginMonth || countYear > beginYear) {
                     month.addWeek(new Week(week.getWeek()));
-                    year.setMonth(new Month(month.getMonth()), countMonth);
+                    year.setMonth(new Month(month.getMonth(), countMonth), countMonth);
                     month.clear();
                 }
                 if (countMonth >= endMonth && countYear == endYear)
@@ -91,6 +91,7 @@ public class Cal {
         return yearArray;
     }
 
+    /*
     public static void main(String[] args)
     {
         Cal col = new Cal();
@@ -113,4 +114,5 @@ public class Cal {
         }
 
     }
+    */
 }

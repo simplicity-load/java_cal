@@ -3,6 +3,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class View {
 
@@ -11,9 +12,8 @@ public class View {
     private int month = todayDate.getMonthValue();
     private int year = todayDate.getYear();
 
-    private String[] args = null;
-
-    HashMap<Integer, String[]> months = new HashMap<Integer, String[]>() {
+    private final static int type_of_month_lang = 2;
+    Map<Integer, String[]> months = new HashMap<Integer, String[]>() {
         {
             put(1,	new String[] {"jan",	"jan",	"janar",	"january"});
             put(2,	new String[] {"shk",	"feb",	"shkurt",	"february"});
@@ -30,11 +30,26 @@ public class View {
         }
     };
 
+
+    private final static int type_of_week_lang = 0;
+    Map<Integer, String[]> weeks = new LinkedHashMap<Integer, String[]>() {
+        {
+            put(1,	new String[] {"Ha", "Mo"});
+            put(2,	new String[] {"Ma", "Tu"});
+            put(3,	new String[] {"Me", "We"});
+            put(4,	new String[] {"En", "Th"});
+            put(5,	new String[] {"Pr", "Fr"});
+            put(6,	new String[] {"Sh", "Sa"});
+            put(7,	new String[] {"Di", "Su"});
+        }
+    };
+
     public View(String[] args) {
-        this.args = args;
+        parseArgs(args);
     }
 
-    public boolean parseArgs(String[] args)
+    //Input View
+    private boolean parseArgs(String[] args)
     {
         if (args.length == 0)
             return false;
@@ -46,7 +61,7 @@ public class View {
                 case "-3" : todayDate.minusMonths(1);
                             int lastMonth = todayDate.getMonthValue();
                             int lastYear = todayDate.getYear();
-                            todayDate.plusMonths(1);
+                            todayDate.plusMonths(2);
                             printRange(lastMonth, lastYear, todayDate.getMonthValue(), todayDate.getYear());
 
                 case "-n" : todayDate.plusMonths(Integer.valueOf(args[1]));
@@ -82,9 +97,55 @@ public class View {
         return false;
     }
 
+    //Output View
     private void printRange(int beginMonth, int beginYear, int endMonth, int endYear) 
     {
-        //
+        Cal calendar = new Cal();
+        Year[] yArr = calendar.getRangeOfMonths(beginMonth, beginYear, endMonth, endYear);
+
+        //one month
+        if (beginMonth == endMonth && beginYear == endYear) {
+            for(Month m : yArr[0].getYear()) {
+                if(m != null) {
+                    String monthHeader = months.get(m.getMonthNumber())[type_of_month_lang] + " " + yArr[0].getYearNumber();
+                    // mHL - monthHeaderLength
+                    int mHL = monthHeader.length();
+                    String formattedMonthHeader = String.format("%" + (20/2 - mHL/2) + "s%s", "", monthHeader);
+                    System.out.println(formattedMonthHeader);
+                    weeks.forEach((k,v) -> {
+                        System.out.printf(v[type_of_week_lang] + " ");
+                    });
+                    System.out.printf("\n");
+                    for (Week w : m.getMonth()) {
+                        if(w != null)
+                            for (Day d : w.getWeek())
+                                if(d != null)
+                                    System.out.printf("%2d ", d.getDay());
+                                else
+                                    System.out.printf("   ");
+                        System.out.printf("\n");
+                    }
+                }
+            }
+            return;
+        }
+        for (Year y : yArr) {
+            String formattedYearHeader = String.format("%" + (64/2 - (y.getYearNumber()+"").length()/2) + "s%d\n", "", y.getYearNumber);
+            System.out.println(formattedYearHeader);
+            for (Month m : y.getYear()) {
+                System.out.println("M");
+                if(m != null)
+                    for (Week w : m.getMonth()) {
+                        System.out.println("W");
+                        if(w != null)
+                            for (Day d : w.getWeek())
+                                if(d != null)
+                                    System.out.printf(" %2d ", d.getDay());
+                                else
+                                    System.out.printf("    ");
+                    }
+            }
+        }
     }
 
     private int stringToMonth(String query)
