@@ -12,7 +12,7 @@ public class Year {
 
     public Year(Month[] months, int yearNumber) 
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 12; i++)
             year[i] = months[i];
         this.yearNumber = yearNumber;
     }

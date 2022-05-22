@@ -33,6 +33,7 @@ public class Cal {
         // We add one since were going to want to inclusively calculate years
         int number_of_years = endYear - beginYear + 1;
         Year[] yearArray = new Year[number_of_years];
+        System.out.printf("%d\n", number_of_years);
 
 
         int[] daysInMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -61,7 +62,7 @@ public class Cal {
 
                     if (countWeekPosition == 7) {
                         countWeekPosition = 1;
-                        if (countYear >= beginYear && countMonth >= beginMonth) {
+                        if (countYear >= beginYear && countMonth >= beginMonth || countYear > beginYear) {
                             week.setDay(new Day(countDay), 7);
                             month.addWeek(new Week(week.getWeek()));
                             //printArray(week.getWeek());
@@ -71,26 +72,36 @@ public class Cal {
                         }
                     }
                     else if (!(countYear == 1752 && countMonth == 9 && countDay > 2 && countDay < 14)) {
-                        if (countYear >= beginYear && countMonth >= beginMonth)
+                        if (countYear >= beginYear && countMonth >= beginMonth || countYear > beginYear)
                             week.setDay(new Day(countDay), countWeekPosition);
                         countWeekPosition++;
                     }
                     countDay++;
                     //System.out.printf(">>>countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counter);
                 }
-                if (countYear >= beginYear && countMonth >= beginMonth) {
+                if (countYear >= beginYear && countMonth >= beginMonth || countYear > beginYear) {
                     month.addWeek(new Week(week.getWeek()));
                     year.setMonth(new Month(month.getMonth()), countMonth);
                     month.clear();
                 }
+                if (countMonth >= endMonth && countYear == endYear)
+                    break;
                 countDay = 1;
                 countMonth++;
                 //System.out.printf(">>countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counter);
             }
-            if (countYear >= beginYear && countMonth >= beginMonth) {
+            //if (countYear >= beginYear)
+                //System.out.printf("countYear >= beginYear: %s | countMonth >= beginMonth: %s | countYear <= endYear: %s | countMonth <= endMonth: %s\n", countYear >= beginYear, countMonth >= beginMonth, countYear <= endYear, countMonth <= endMonth);
+            if (countYear >= beginYear) {
                 yearArray[countYear-beginYear] = new Year(year.getYear(), countYear);
                 year.clear();
             }
+
+            if (countYear >= beginYear)
+                System.out.printf("countMonth >= endMonth: %s | countYear == endYear: %s\n", countMonth >= endMonth, countYear == endYear);
+            if (countYear == endYear)
+                break;
+
             countMonth = 1;
             countYear++;
             System.out.printf(">countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counter);
@@ -98,7 +109,13 @@ public class Cal {
             //counter++;
         }
 
-        System.out.printf("countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counter);
+        System.out.printf("countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | years: %d\n", countDay, countWeekPosition, countMonth, countYear, yearArray.length);
+
+        for (Year y : yearArray)
+            if (y != null)
+                System.out.printf("Year: %d\n", y.getYearNumber());
+            else
+                System.out.printf("Year: null\n");
 
         return yearArray;
     }
@@ -131,7 +148,7 @@ public class Cal {
                         System.out.println("null");
         */
         Cal col = new Cal();
-        Year[] yArr = col.getRangeOfMonths(3, 2022, 3, 2023);
+        Year[] yArr = col.getRangeOfMonths(4, 2022, 3, 2026);
         for (Year y : yArr) {
             System.out.printf("Year: %d\n", y.getYearNumber());
             for (Month m : y.getYear()) {
@@ -149,14 +166,5 @@ public class Cal {
             }
         }
 
-    }
-    public static void printArray(Day[] arr) {
-        System.out.printf("\n<<< Print Array");
-        for (Day e : arr)
-            if (e != null)
-                System.out.printf(" %d ", e.getDay());
-            else 
-                System.out.printf("    ");
-        System.out.printf("\n");
     }
 }
