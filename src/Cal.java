@@ -50,6 +50,7 @@ public class Cal {
             else
                 daysInMonth[1] = 28;
 
+            // TODO add upper restrictions
             Year year = new Year(countYear);
             while (countMonth <= 12) {
                 Month month = new Month();
@@ -63,7 +64,10 @@ public class Cal {
                         if (countYear >= beginYear && countMonth >= beginMonth) {
                             week.setDay(new Day(countDay), 7);
                             month.addWeek(new Week(week.getWeek()));
+                            //printArray(week.getWeek());
+                            //System.out.printf(" %d\n ", countDay);
                             week.clear();
+                            //printArray(week.getWeek());
                         }
                     }
                     else if (!(countYear == 1752 && countMonth == 9 && countDay > 2 && countDay < 14)) {
@@ -75,6 +79,7 @@ public class Cal {
                     //System.out.printf(">>>countDay: %d | countWeekPosition: %d | countMonth: %d | countYear: %d | counter: %d\n", countDay, countWeekPosition, countMonth, countYear, counter);
                 }
                 if (countYear >= beginYear && countMonth >= beginMonth) {
+                    month.addWeek(new Week(week.getWeek()));
                     year.setMonth(new Month(month.getMonth()), countMonth);
                     month.clear();
                 }
@@ -126,9 +131,9 @@ public class Cal {
                         System.out.println("null");
         */
         Cal col = new Cal();
-        Year[] yArr = col.getRangeOfMonths(3, 2022, 9, 2022);
+        Year[] yArr = col.getRangeOfMonths(3, 2022, 3, 2023);
         for (Year y : yArr) {
-            System.out.printf("Year: %d", y.getYearNumber());
+            System.out.printf("Year: %d\n", y.getYearNumber());
             for (Month m : y.getYear()) {
                 System.out.println("M");
                 if(m != null)
@@ -137,10 +142,21 @@ public class Cal {
                         if(w != null)
                             for (Day d : w.getWeek())
                                 if(d != null)
-                                    System.out.printf("%d", d.getDay());
+                                    System.out.printf(" %2d ", d.getDay());
+                                else
+                                    System.out.printf("    ");
                     }
             }
         }
 
+    }
+    public static void printArray(Day[] arr) {
+        System.out.printf("\n<<< Print Array");
+        for (Day e : arr)
+            if (e != null)
+                System.out.printf(" %d ", e.getDay());
+            else 
+                System.out.printf("    ");
+        System.out.printf("\n");
     }
 }
