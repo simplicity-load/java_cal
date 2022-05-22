@@ -10,6 +10,13 @@ public class Year {
         this.yearNumber = yearNumber;
     }
 
+    public Year(Month[] months, int yearNumber) 
+    {
+        for (int i = 0; i < 6; i++)
+            year[i] = months[i];
+        this.yearNumber = yearNumber;
+    }
+
     public void setMonth(Month month, int position)
     {
         try {
@@ -29,4 +36,13 @@ public class Year {
     {
         return yearNumber;
     }
+
+    public void clear()
+    {
+        year = new Month[] {null, null, null, null, null, null, null, null, null, null, null, null};
+    }
+
+    //public Month[] getCopyYear() {
+    //    return Arrays.copyOf(year);
+    //}
 }

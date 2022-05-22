@@ -1,11 +1,9 @@
 public class Day {
     private int day;
-    private int daySinceBeginning;
 
-    public Day(int day, int daySinceBeginning)
+    public Day(int day)
     {
         this.day = day;
-        this.daySinceBeginning = daySinceBeginning;
     }
 
     public int getDay()
@@ -13,8 +11,4 @@ public class Day {
         return day;
     }
 
-    public int getDaySinceBegin()
-    {
-        return day;
-    }
 }

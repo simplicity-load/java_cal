@@ -1,12 +1,16 @@
 public class Month {
     // external
     private Week[] month = new Week[] {null, null, null, null, null, null};
-    private String monthName;
 
     // internal
     private int weeks = 0;
 
-    public Month() { }
+    public Month() {  }
+
+    public Month(Week[] weeks) {
+        for (int i = 0; i < 6; i++)
+            month[i] = weeks[i];
+    }
 
     public void addWeek(Week week)
     {
@@ -24,17 +28,6 @@ public class Month {
         return month;
     }
 
-    public void setMonthName(String monthName)
-    {
-        this.monthName = monthName;
-    }
-
-
-    public String getMonthName()
-    {
-        return monthName;
-    }
-
 
     public boolean isEmpty()
     {
@@ -49,4 +42,14 @@ public class Month {
 
         return false;
     }
+
+
+    public void clear()
+    {
+        month = new Week[] {null, null, null, null, null, null};
+    }
+
+    //public Week[] getCopyMonth() {
+    //    return Arrays.copyOf(month);
+    //}
 }

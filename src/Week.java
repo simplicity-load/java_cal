@@ -3,6 +3,11 @@ public class Week {
 
     public Week() { }
 
+    public Week(Day[] days) {
+        for (int i = 0; i < 6; i++)
+            week[i] = days[i];
+    }
+
     public void setDay(Day day, int position)
     {
         try {
@@ -31,4 +36,14 @@ public class Week {
 
         return false;
     }
+
+    public void clear()
+    {
+        week = new Day[] {null, null, null, null, null, null, null};
+    }
+
+    //public Day[] getCopyWeek() {
+    //    return Arrays.copyOf(week);
+    //}
+
 }
