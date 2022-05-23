@@ -15,9 +15,18 @@ public class InputView extends View {
     private String[] args;
 
     // The quick help string
-    private String helpString = "Usage:\n"
+    private String helpString = "cal(1) clone (in Java)\n\n"
+                              + "Usage:\n"
+                              + "java Main [options] [[month] year] [month year]\n"
                               + "\n"
-                              + "aa\n";
+                              + "Display a calendar, or some part of it.\n"
+                              + "Without any arguments, display the current month.\n"
+                              + "\n"
+                              + "Options:\n"
+                              + "-1\t\t\tshow only a single month (default)\n"
+                              + "-3\t\t\tshow three months spanning the date\n"
+                              + "-n <num>  \tshow num months starting with date's month\n"
+                              + "-y\t\t\tshow the whole year\n";
 
     /** Initialize this class as an object to parse input
       * @param args Input to be parsed as a String array
@@ -39,6 +48,11 @@ public class InputView extends View {
         if (args[0].charAt(0) == '-')
             if (args[0].equals("-n"))
                 argPush = 2;
+            else if (args[0].equals("-y")) {
+                beginMonth = 0;
+                endMonth = 12;
+                return true;
+            }
             else
                 argPush = 1;
 
@@ -98,7 +112,7 @@ public class InputView extends View {
       * @return The month number
       */
     private int stringToMonth(String query)
-    
+    {
         try {
             return Integer.valueOf(query);
         } catch (NumberFormatException e) {

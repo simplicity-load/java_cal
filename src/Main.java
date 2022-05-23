@@ -1,3 +1,5 @@
+/** An example Controller module for the OutputView and InputView Classes
+  */
 class Main {
     public static void main(String[] args) {
         InputView iv = new InputView(args);
