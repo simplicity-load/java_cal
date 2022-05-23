@@ -1,7 +1,5 @@
 import java.time.LocalDate;
 
-import java.io.Console;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -58,22 +56,25 @@ public class View {
             return true;
         }
 
-        // TODO fix these options
         if (args[0].charAt(0) == '-') {
             switch(args[0]) {
                 case "-1" : printRange(month, year, month, year);
                             break;
 
-                case "-3" : todayDate.minusMonths(1);
-                            int lastMonth = todayDate.getMonthValue();
-                            int lastYear = todayDate.getYear();
-                            System.out.printf("%d | %d", lastMonth, lastYear);
-                            todayDate.plusMonths(2);
-                            printRange(lastMonth, lastYear, todayDate.getMonthValue(), todayDate.getYear());
+                case "-3" : LocalDate minusOne = todayDate.minusMonths(1);
+                            int lastMonth = minusOne.getMonthValue();
+                            int lastYear =  minusOne.getYear();
+
+                            LocalDate plusOne = todayDate.plusMonths(1);
+                            int nextMonth = plusOne.getMonthValue();
+                            int nextYear =  plusOne.getYear();
+                            printRange(lastMonth, lastYear, nextMonth, nextYear);
                             break;
 
-                case "-n" : todayDate.plusMonths(Integer.valueOf(args[1]));
-                            printRange(month, year, todayDate.getMonthValue(), todayDate.getYear());
+                case "-n" : LocalDate plusN = todayDate.plusMonths(Integer.valueOf(args[1])-1);
+                            int endMonth = plusN.getMonthValue();
+                            int endYear =  plusN.getYear();
+                            printRange(month, year, endMonth, endYear);
                             break;
 
                 default :   return false;
@@ -136,6 +137,8 @@ public class View {
                                         System.out.printf("%2d ", d.getDay());
                                 else
                                     System.out.printf("   ");
+                        else
+                            System.out.printf("                      ");
                         System.out.printf("\n");
                     }
                 }
@@ -143,15 +146,18 @@ public class View {
             return;
         }
         for (Year y : yArr) {
-            String formattedYearHeader = String.format("%" + (64/2 - (y.getYearNumber()+"").length()/2) + "s%d\n", "", y.getYearNumber());
-            System.out.println(formattedYearHeader);
             int mCounter = 0;
+            int month_cols = 3;
+
+            String formattedYearHeader = String.format("%" + ((21*month_cols)/2 - (y.getYearNumber()+"").length()/2) + "s%d\n", "", y.getYearNumber());
+            System.out.println(formattedYearHeader);
+
             Month[] mArr = new Month[] {null, null, null};
             for (Month m : y.getYear()) {
                 if(m != null) {
                     mCounter++;
                     mArr[mCounter-1] = m;
-                    if (mCounter == 3 || m.getMonthNumber() == 12 ||
+                    if (mCounter == month_cols || m.getMonthNumber() == 12 ||
                         m.getMonthNumber() == endMonth && y.getYearNumber() == endYear) {
                         for (int i = 0; i < mCounter; i++) {
                             String mName = months.get(mArr[i].getMonthNumber())[type_of_month_lang];
@@ -173,9 +179,8 @@ public class View {
                         }
                         System.out.printf("\n");
 
-                        // TODO Fix nentor 2021, mars 2022
                         for (int i = 0; i < 6; i++) {
-                            for (int j = 0; j < 3; j++) {
+                            for (int j = 0; j < month_cols; j++) {
                                 if (mArr[j] != null) {
                                     Week _week = (mArr[j].getMonth())[i];
                                     if (_week != null) {
@@ -193,7 +198,8 @@ public class View {
                                             else
                                                 System.out.printf("   ");
                                         }
-                                    }
+                                    } else
+                                        System.out.printf("                      ");
                                 }
                             }
                             System.out.printf("\n");
@@ -218,7 +224,6 @@ public class View {
         }
     }
 
-    // TODO turn both query and s to lowercase
     private int stringToMonth(String query)
     {
         try {
