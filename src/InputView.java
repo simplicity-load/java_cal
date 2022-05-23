@@ -1,25 +1,35 @@
 import java.time.LocalDate;
 
+/** The InputView Class serves as a means to gather input from the user
+  */
 public class InputView extends View {
 
+    // Public properties which define the date range
     public int beginMonth = month;
     public int beginYear = year;
 
     public int endMonth = month;
     public int endYear = year;
 
+    // String array of input
     private String[] args;
 
+    // The quick help string
     private String helpString = "Usage:\n"
                               + "\n"
                               + "aa\n";
 
+    /** Initialize this class as an object to parse input
+      * @param args Input to be parsed as a String array
+      */
     public InputView(String[] args)
     {
         this.args = args;
     }
 
-    //Input View
+    /** Parse the input and set the properties of this object to the parsed values
+      * @return The success of the method
+      */
     public boolean parseArgs()
     { 
         if (args.length == 0)
@@ -83,8 +93,12 @@ public class InputView extends View {
         }
     }
 
+    /** Given a String, get the month number from it
+      * @param query String to be turned into appropriate data
+      * @return The month number
+      */
     private int stringToMonth(String query)
-    {
+    
         try {
             return Integer.valueOf(query);
         } catch (NumberFormatException e) {

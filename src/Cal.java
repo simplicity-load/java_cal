@@ -1,12 +1,10 @@
+/** The Calendar calculates a given range of dates and returns a Year array 
+  */
 public class Cal {
 
+    /** Constructor
+      */
     public Cal() { }
-
-    public Year[] getMonth(int month, int year)
-    {
-        return getRangeOfMonths(month, year, month, year);
-    }
-
 
     // How the first day of the first year starts out
     private static final int initial_day = 1;
@@ -14,8 +12,16 @@ public class Cal {
     private static final int initial_month = 1;
     private static final int initial_year = 1;
 
+    /** Given a range of dates inclusively return a proportionally sized Year array
+      * @param beginMonth The month of the date from which to start
+      * @param beginYear The year of the date from which to start
+      * @param endMonth The month of the date to end
+      * @param endYear The year of the date to end
+      * @return A proportionally sized Year array
+      */
     public Year[] getRangeOfMonths(int beginMonth, int beginYear, int endMonth, int endYear)
     {
+        // Check if the range of dates is given correctly and exit otherwise
         if (beginMonth < 0 || endMonth < 0 ||
             beginMonth > 12 || endMonth > 12 ||
             beginYear < 0 || endYear < 0 ||
@@ -25,7 +31,9 @@ public class Cal {
             System.out.println("You inputted wrong actual parameters for the Calendar");
             System.exit(1);
         }
-        // We add one since were going to want to inclusively calculate years
+
+        // Size of the Year array (plus 1 since it inclusively calculates years)
+        // and a Year array created with that size
         int number_of_years = endYear - beginYear + 1;
         Year[] yearArray = new Year[number_of_years];
 
@@ -35,9 +43,10 @@ public class Cal {
         int countWeekPosition = initial_week_position;
         int countMonth = initial_month;
         int countYear = initial_year;
-        int counter = 0;
+
         while (countYear <= endYear) {
 
+            // Extensively checking for leap years
             if (countYear <= 1752 && countYear % 4 == 0)
                 daysInMonth[1] = 29;
             else if((countYear % 4 == 0 && countYear % 100 != 0) || countYear % 400 == 0)
@@ -45,15 +54,20 @@ public class Cal {
             else
                 daysInMonth[1] = 28;
 
+            // Create a new Year object
             Year year = new Year(countYear);
+            // Correctly add fitting months to the above Year object
             while (countMonth <= 12) {
                 Month month = new Month(countMonth);
                 Week week = new Week();
+                // Correctly add days to the above Week object 
+                // and package those Week objects into the Month object above
                 while (countDay <= daysInMonth[countMonth-1]) {
 
                     if (countWeekPosition == 7) {
                         countWeekPosition = 1;
                         if (countYear >= beginYear && countMonth >= beginMonth || countYear > beginYear) {
+                            // Package a week
                             week.setDay(new Day(countDay), 7);
                             month.addWeek(new Week(week.getWeek()));
                             week.clear();
@@ -67,6 +81,7 @@ public class Cal {
                     countDay++;
                 }
                 if (countYear >= beginYear && countMonth >= beginMonth || countYear > beginYear) {
+                    // Package a Month object into the Year object
                     month.addWeek(new Week(week.getWeek()));
                     year.setMonth(new Month(month.getMonth(), countMonth), countMonth);
                     month.clear();
@@ -76,6 +91,8 @@ public class Cal {
                 countDay = 1;
                 countMonth++;
             }
+            // If our counters have arrived to the range of dates which it's going to package:
+            // package the Year in the yearArray
             if (countYear >= beginYear) {
                 yearArray[countYear-beginYear] = new Year(year.getYear(), countYear);
                 year.clear();
@@ -88,31 +105,8 @@ public class Cal {
             countYear++;
         }
 
+        // Return the Year array
         return yearArray;
     }
 
-    /*
-    public static void main(String[] args)
-    {
-        Cal col = new Cal();
-        Year[] yArr = col.getMonth(3, 2022);
-        for (Year y : yArr) {
-            System.out.printf("Year: %d\n", y.getYearNumber());
-            for (Month m : y.getYear()) {
-                System.out.println("M");
-                if(m != null)
-                    for (Week w : m.getMonth()) {
-                        System.out.println("W");
-                        if(w != null)
-                            for (Day d : w.getWeek())
-                                if(d != null)
-                                    System.out.printf(" %2d ", d.getDay());
-                                else
-                                    System.out.printf("    ");
-                    }
-            }
-        }
-
-    }
-    */
 }

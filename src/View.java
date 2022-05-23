@@ -3,12 +3,18 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+/** The View Class is an abstract class which provides some basic data needed to construct input or output views
+  */
 abstract class View {
+
+    // Today's date
     public LocalDate todayDate = LocalDate.now();
     public int day = todayDate.getDayOfMonth();
     public int month = todayDate.getMonthValue();
     public int year = todayDate.getYear();
 
+    // Month names and their acronyms(in multiple languages)
     public final static int type_of_month_lang = 2;
     public Map<Integer, String[]> months = new HashMap<Integer, String[]>() {
         {
@@ -28,6 +34,7 @@ abstract class View {
     };
 
 
+    // Week labels (in multiple languages)
     public final static int type_of_week_lang = 0;
     public Map<Integer, String[]> weeks = new LinkedHashMap<Integer, String[]>() {
         {

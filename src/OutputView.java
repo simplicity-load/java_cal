@@ -2,29 +2,43 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+/** The OutputView Class serves as a means to prettily display a Year array
+  */
 public class OutputView extends View {
 
+    /** Constructor
+      */
     public OutputView() { }
 
-
+    /** Given a range of dates inclusively display the corresponding months of the range of dates
+      * @param beginMonth The month of the date from which to start
+      * @param beginYear The year of the date from which to start
+      * @param endMonth The month of the date to end
+      * @param endYear The year of the date to end
+      */
     public void printRange(int beginMonth, int beginYear, int endMonth, int endYear) 
     {
+        // Use the Cal Class to get a Year array for the method parameters
         Cal calendar = new Cal();
         Year[] yArr = calendar.getRangeOfMonths(beginMonth, beginYear, endMonth, endYear);
 
-        //one month
+        // If the range specifies only one month then only print one Month
         if (beginMonth == endMonth && beginYear == endYear) {
             for(Month m : yArr[0].getYear()) {
                 if(m != null) {
+                    // Month header formatting
                     String monthHeader = months.get(m.getMonthNumber())[type_of_month_lang] + " " + yArr[0].getYearNumber();
                     // mHL - monthHeaderLength
                     int mHL = monthHeader.length();
+                    // Display the month label
                     String formattedMonthHeader = String.format("%" + (20/2 - mHL/2) + "s%s", "", monthHeader);
                     System.out.println(formattedMonthHeader);
+                    // Display the week day labels
                     weeks.forEach((k,v) -> {
                         System.out.printf(v[type_of_week_lang] + " ");
                     });
                     System.out.printf("\n");
+                    // Display the days
                     for (Week w : m.getMonth()) {
                         if(w != null)
                             for (Day d : w.getWeek())
@@ -41,21 +55,30 @@ public class OutputView extends View {
                     }
                 }
             }
+            // Return Null after displaying the Month
             return;
         }
-        for (Year y : yArr) {
-            int mCounter = 0;
-            int month_cols = 3;
 
-            String formattedYearHeader = String.format("%" + ((21*month_cols)/2 - (y.getYearNumber()+"").length()/2) + "s%d\n", "", y.getYearNumber());
+
+        // Display the range of dates
+        for (Year y : yArr) {
+
+            // Local variable (to count up to three months)
+            int mCounter = 0;
+
+            // Formatted year label
+            String formattedYearHeader = String.format("%" + ((21*3)/2 - (y.getYearNumber()+"").length()/2) + "s%d\n", "", y.getYearNumber());
             System.out.println(formattedYearHeader);
 
             Month[] mArr = new Month[] {null, null, null};
+
+            // Add three months to the Month array mArr
             for (Month m : y.getYear()) {
                 if(m != null) {
                     mCounter++;
                     mArr[mCounter-1] = m;
-                    if (mCounter == month_cols || m.getMonthNumber() == 12 ||
+                    // If we have 3 months (or this month is the last of the year) then display them
+                    if (mCounter == 3 || m.getMonthNumber() == 12 ||
                         m.getMonthNumber() == endMonth && y.getYearNumber() == endYear) {
                         for (int i = 0; i < mCounter; i++) {
                             String mName = months.get(mArr[i].getMonthNumber())[type_of_month_lang];
@@ -63,9 +86,11 @@ public class OutputView extends View {
                             int bSpace = 20/2 - mName.length()/2;
                             //after name space
                             int aSpace = 20 - (bSpace + mName.length());
+                            // Month format
                             System.out.printf(String.format("%" + bSpace + "s%s%" + aSpace + "s  ", "", mName, ""));
                         }
                         System.out.printf("\n");
+                        // Display Month headers
                         for (int i = 0; i < mCounter; i++) {
                             weeks.forEach((k,v) -> {
                                 if (k == 7)
@@ -77,8 +102,9 @@ public class OutputView extends View {
                         }
                         System.out.printf("\n");
 
+                        // Display the days of the Month objects in the mArr
                         for (int i = 0; i < 6; i++) {
-                            for (int j = 0; j < month_cols; j++) {
+                            for (int j = 0; j < 3; j++) {
                                 if (mArr[j] != null) {
                                     Week _week = (mArr[j].getMonth())[i];
                                     if (_week != null) {
