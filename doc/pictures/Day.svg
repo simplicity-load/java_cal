@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1080"
+   height="1080"
+   viewBox="0 0 1080 1080"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="Day.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="1.403723"
+     inkscape:cx="524.67617"
+     inkscape:cy="680.68986"
+     inkscape:window-width="1600"
+     inkscape:window-height="880"
+     inkscape:window-x="0"
+     inkscape:window-y="20"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <sodipodi:guide
+       position="125.03618,952.7513"
+       orientation="1,0"
+       id="guide857" />
+    <sodipodi:guide
+       position="125.03618,952.7513"
+       orientation="0,-1"
+       id="guide859" />
+    <sodipodi:guide
+       position="950.27496,952.7513"
+       orientation="1,0"
+       id="guide1021" />
+    <sodipodi:guide
+       position="125.03618,129.72504"
+       orientation="0,-1"
+       id="guide1023" />
+    <sodipodi:guide
+       position="606.10067,581.34906"
+       orientation="0,-1"
+       id="guide1025" />
+    <sodipodi:guide
+       position="550.15919,603.29957"
+       orientation="1,0"
+       id="guide1027" />
+    <sodipodi:guide
+       position="425.39451,366.6751"
+       orientation="0,-1"
+       id="guide138214" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <rect
+       x="617.60024"
+       y="687.4585"
+       width="67.441045"
+       height="63.840546"
+       id="rect54616" />
+    <rect
+       x="617.2715"
+       y="687.02369"
+       width="407.78843"
+       height="28.515864"
+       id="rect44102" />
+    <rect
+       x="162.78962"
+       y="675.46629"
+       width="423.46793"
+       height="32.184469"
+       id="rect28764" />
+    <rect
+       x="196.32794"
+       y="231.65907"
+       width="685.06656"
+       height="296.66992"
+       id="rect6216" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 125.03618,127.2487 H 950.27496 V 950.27496 H 125.03618 Z"
+       id="path1062" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 125.03618,498.46727 H 950.27496"
+       id="path1177" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.17643px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 550.15919,498.1836 V 950.27496"
+       id="path1292" />
+    <text
+       xml:space="preserve"
+       id="text6214"
+       style="font-style:normal;font-weight:normal;font-size:200px;line-height:1.25;font-family:sans-serif;text-align:center;white-space:pre;shape-inside:url(#rect6216);fill:#000000;fill-opacity:1;stroke:none"
+       x="0"
+       y="0"
+       transform="translate(-12.724767,-84.500968)"><tspan
+         x="341.40039"
+         y="408.61133"
+         id="tspan185553">Day</tspan></text>
+    <text
+       xml:space="preserve"
+       id="text28762"
+       style="font-style:normal;font-weight:normal;font-size:28px;line-height:1.25;font-family:sans-serif;text-align:center;white-space:pre;shape-inside:url(#rect28764);fill:#000000;fill-opacity:1;stroke:none"
+       x="106.58203"
+       y="0"
+       transform="translate(-36.098364,37.058882)"><tspan
+         x="348.77246"
+         y="700.24023"
+         id="tspan185555">day</tspan></text>
+    <text
+       xml:space="preserve"
+       id="text44100"
+       style="font-style:normal;font-weight:normal;font-size:24px;line-height:1.25;font-family:sans-serif;text-align:center;white-space:pre;shape-inside:url(#rect44102);fill:#000000;fill-opacity:1;stroke:none"
+       transform="translate(-74.784974,26.632253)"
+       x="152.26562"
+       y="0"><tspan
+         x="765.89453"
+         y="708.25781"
+         id="tspan185557">functions</tspan></text>
+    <text
+       xml:space="preserve"
+       id="text54614"
+       style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;white-space:pre;shape-inside:url(#rect54616)" />
+  </g>
+</svg>

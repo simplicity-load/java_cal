@@ -1,5 +1,6 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+import java.io.Console;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -15,18 +16,18 @@ public class View {
     private final static int type_of_month_lang = 2;
     Map<Integer, String[]> months = new HashMap<Integer, String[]>() {
         {
-            put(1,	new String[] {"jan",	"jan",	"janar",	"january"});
-            put(2,	new String[] {"shk",	"feb",	"shkurt",	"february"});
-            put(3,	new String[] {"mar",	"mar",	"mars",	    "march"});
-            put(4,	new String[] {"pri",	"apr",	"prill",	"april"});
-            put(5,	new String[] {"maj",	"may",	"maj",	    "may"});
-            put(6,	new String[] {"qer",	"jun",	"qershor",	"june"});
-            put(7,	new String[] {"kor",	"jul",	"korrik",	"july"});
-            put(8,	new String[] {"gus",	"aug",	"gusht",	"august"});
-            put(9,	new String[] {"sht",	"sep",	"shtator",	"september"});
-            put(10,	new String[] {"tet",	"oct",	"tetor",	"october"});
-            put(11,	new String[] {"nen",	"nov",	"nentor",	"november"});
-            put(12,	new String[] {"dhj",	"dec",	"dhjetor",	"december"});
+            put(1,	new String[] {"Jan",	"Jan",	"Janar",	"January"});
+            put(2,	new String[] {"Shk",	"Feb",	"Shkurt",	"February"});
+            put(3,	new String[] {"Mar",	"Mar",	"Mars",	    "March"});
+            put(4,	new String[] {"Pri",	"Apr",	"Prill",	"April"});
+            put(5,	new String[] {"Maj",	"May",	"Maj",	    "May"});
+            put(6,	new String[] {"Qer",	"Jun",	"Qershor",	"June"});
+            put(7,	new String[] {"Kor",	"Jul",	"Korrik",	"July"});
+            put(8,	new String[] {"Gus",	"Aug",	"Gusht",	"August"});
+            put(9,	new String[] {"Sht",	"Sep",	"Shtator",	"September"});
+            put(10,	new String[] {"Tet",	"Oct",	"Tetor",	"October"});
+            put(11,	new String[] {"Nen",	"Nov",	"Nentor",	"November"});
+            put(12,	new String[] {"Dhj",	"Dec",	"Dhjetor",	"December"});
         }
     };
 
@@ -46,29 +47,38 @@ public class View {
 
     public View(String[] args) {
         parseArgs(args);
+        // TODO print help
     }
 
     //Input View
     private boolean parseArgs(String[] args)
     {
-        if (args.length == 0)
-            return false;
+        if (args.length == 0) {
+            printRange(month, year, month, year);
+            return true;
+        }
 
+        // TODO fix these options
         if (args[0].charAt(0) == '-') {
             switch(args[0]) {
                 case "-1" : printRange(month, year, month, year);
+                            break;
 
                 case "-3" : todayDate.minusMonths(1);
                             int lastMonth = todayDate.getMonthValue();
                             int lastYear = todayDate.getYear();
+                            System.out.printf("%d | %d", lastMonth, lastYear);
                             todayDate.plusMonths(2);
                             printRange(lastMonth, lastYear, todayDate.getMonthValue(), todayDate.getYear());
+                            break;
 
                 case "-n" : todayDate.plusMonths(Integer.valueOf(args[1]));
                             printRange(month, year, todayDate.getMonthValue(), todayDate.getYear());
+                            break;
 
-                default :   return true;
+                default :   return false;
             }
+            return true;
         }
 
         if (args.length == 1) {
@@ -120,7 +130,10 @@ public class View {
                         if(w != null)
                             for (Day d : w.getWeek())
                                 if(d != null)
-                                    System.out.printf("%2d ", d.getDay());
+                                    if (day == d.getDay() && month == m.getMonthNumber() && year == yArr[0].getYearNumber())
+                                        System.out.printf("%s%s%s%2d%s ", "\u001B[0m", "\u001B[107m", "\u001B[30m", d.getDay(), "\u001B[0m");
+                                    else
+                                        System.out.printf("%2d ", d.getDay());
                                 else
                                     System.out.printf("   ");
                         System.out.printf("\n");
@@ -130,24 +143,82 @@ public class View {
             return;
         }
         for (Year y : yArr) {
-            String formattedYearHeader = String.format("%" + (64/2 - (y.getYearNumber()+"").length()/2) + "s%d\n", "", y.getYearNumber);
+            String formattedYearHeader = String.format("%" + (64/2 - (y.getYearNumber()+"").length()/2) + "s%d\n", "", y.getYearNumber());
             System.out.println(formattedYearHeader);
+            int mCounter = 0;
+            Month[] mArr = new Month[] {null, null, null};
             for (Month m : y.getYear()) {
-                System.out.println("M");
-                if(m != null)
-                    for (Week w : m.getMonth()) {
-                        System.out.println("W");
-                        if(w != null)
-                            for (Day d : w.getWeek())
-                                if(d != null)
-                                    System.out.printf(" %2d ", d.getDay());
+                if(m != null) {
+                    mCounter++;
+                    mArr[mCounter-1] = m;
+                    if (mCounter == 3 || m.getMonthNumber() == 12 ||
+                        m.getMonthNumber() == endMonth && y.getYearNumber() == endYear) {
+                        for (int i = 0; i < mCounter; i++) {
+                            String mName = months.get(mArr[i].getMonthNumber())[type_of_month_lang];
+                            //before name space
+                            int bSpace = 20/2 - mName.length()/2;
+                            //after name space
+                            int aSpace = 20 - (bSpace + mName.length());
+                            System.out.printf(String.format("%" + bSpace + "s%s%" + aSpace + "s  ", "", mName, ""));
+                        }
+                        System.out.printf("\n");
+                        for (int i = 0; i < mCounter; i++) {
+                            weeks.forEach((k,v) -> {
+                                if (k == 7)
+                                    System.out.printf(v[type_of_week_lang]);
                                 else
-                                    System.out.printf("    ");
+                                    System.out.printf(v[type_of_week_lang] + " ");
+                            });
+                            System.out.printf("  ");
+                        }
+                        System.out.printf("\n");
+
+                        // TODO Fix nentor 2021, mars 2022
+                        for (int i = 0; i < 6; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                if (mArr[j] != null) {
+                                    Week _week = (mArr[j].getMonth())[i];
+                                    if (_week != null) {
+                                        Day[] days = _week.getWeek();
+                                        for (int k = 0; k < 7; k++) {
+                                            if(days[k] != null)
+                                                if (day == days[k].getDay() && month == mArr[j].getMonthNumber() && year == y.getYearNumber())
+                                                    System.out.printf("%s%s%s%2d%s ", "\u001B[0m", "\u001B[107m", "\u001B[30m", days[k].getDay(), "\u001B[0m");
+                                                else if (k == 6)
+                                                    System.out.printf("%2d  ", days[k].getDay());
+                                                else
+                                                    System.out.printf("%2d ", days[k].getDay());
+                                            else if (k == 6)
+                                                System.out.printf("    ");
+                                            else
+                                                System.out.printf("   ");
+                                        }
+                                    }
+                                }
+                            }
+                            System.out.printf("\n");
+                        }
+                        System.out.printf("\n");
+
+
+                        mCounter = 0;
+                        mArr = new Month[] {null, null, null};
                     }
+                }
+                    //for (Week w : m.getMonth()) {
+                    //    System.out.println("W");
+                    //    if(w != null)
+                    //        for (Day d : w.getWeek())
+                    //            if(d != null)
+                    //                System.out.printf(" %2d ", d.getDay());
+                    //            else
+                    //                System.out.printf("    ");
+                    //}
             }
         }
     }
 
+    // TODO turn both query and s to lowercase
     private int stringToMonth(String query)
     {
         try {
@@ -155,7 +226,7 @@ public class View {
         } catch (NumberFormatException e) {
             for (int k : months.keySet())
                 for (String s : months.get(k))
-                    if (query.equals(s))
+                    if ((query.toLowerCase()).equals(s.toLowerCase()))
                         return k;
         }
         return -1;
