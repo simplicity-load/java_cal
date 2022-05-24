@@ -1,6 +1,6 @@
 # cal(1) clone in Java
 
-**Install ''Windows Terminal'' from the ''Windows Store'' before using for the full experience**
+Simple project reproducing a similarly functioning program as the `cal(1)` program from the `util-linux` package.
 
 ## Building the project
 
@@ -13,6 +13,8 @@ You can compile the whole project by changing into the `src/` directory and runn
 `javac Main.java`
 
 ## Usage
+
+**Install ''Windows Terminal'' from the ''Windows Store'' before using for the full experience**
 
 You can learn how to use it by running
 
