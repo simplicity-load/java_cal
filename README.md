@@ -4,9 +4,9 @@ Simple project reproducing a similarly functioning program as the `cal(1)` progr
 
 ## Building the project
 
-After getting a copy of the repository by running
+Get a copy of the repository by running
 
-`git clone <the link to this repo>`
+`git clone https://github.com/simplicity-load/java_cal.git`
 
 You can compile the whole project by changing into the `src/` directory and running
 
@@ -14,7 +14,7 @@ You can compile the whole project by changing into the `src/` directory and runn
 
 ## Usage
 
-**Install ''Windows Terminal'' from the ''Windows Store'' before using for the full experience**
+**Install ''Windows Terminal''(or any other terminal that emulates VT100) from the ''Windows Store'' before using for the full experience**
 
 You can learn how to use it by running
 
